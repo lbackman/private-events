@@ -1,0 +1,16 @@
+<h1>Event Information</h1>
+
+<div id="<%= dom_id @event %>">
+  <p>
+    <strong>Host:</strong>
+    <%= @event.creator.email %>
+  </p>
+
+  <p>
+    <strong>Date:</strong>
+    <%= @event.date %>
+  </p>
+
+</div>
+
+<%= link_to "Back to events", root_path %>

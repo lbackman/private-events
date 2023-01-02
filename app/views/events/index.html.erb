@@ -2,11 +2,12 @@
 
 <div id="events">
   <% @events.each do |event| %>
-    <div class="event">
-      <div class="creator"> Host: <%= event.creator.email %></div>
-      <div class="time"> Date: <%= event.date %></div>
-      <br>
-    </div>
+    <%= link_to event do %>
+      <div class="event">
+        <div class="creator"> Host: <%= event.creator.email %></div>
+        <div class="time"> Date: <%= event.date %></div>
+      </div>
+    <% end %>
   <% end %>
 </div>
 <br>
