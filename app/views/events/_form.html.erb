@@ -1,0 +1,12 @@
+<%= form_with model: event do |form| %>
+  
+  <div>
+    <%= form.label :date %><br>
+    <%= form.datetime_select :date %><br>
+    
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

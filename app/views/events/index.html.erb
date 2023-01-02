@@ -1,2 +1,14 @@
-<h1>Events#index</h1>
-<p>Find me in app/views/events/index.html.erb</p>
+<h1>Events</h1>
+
+<div id="events">
+  <% @events.each do |event| %>
+    <div class="event">
+      <div class="creator"> Host: <%= event.creator.email %></div>
+      <div class="time"> Date: <%= event.date %></div>
+      <br>
+    </div>
+  <% end %>
+</div>
+<br>
+
+<%= link_to 'New Event', 'events/new' %>
