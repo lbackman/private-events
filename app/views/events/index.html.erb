@@ -4,7 +4,14 @@
   <% @events.each do |event| %>
     <%= link_to event do %>
       <div class="event">
-        <div class="creator"> Host: <%= event.creator.email %></div>
+        <div class="creator"> Host: 
+        
+          <% unless event.creator.username %>
+            <%= event.creator.email %></div>
+          <% else %>
+            <%= event.creator.username %></div>
+          <% end %>
+
         <div class="time"> Date: <%= event.date %></div>
       </div>
     <% end %>
