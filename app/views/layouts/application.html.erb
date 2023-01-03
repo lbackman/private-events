@@ -11,6 +11,29 @@
   </head>
 
   <body>
+    <div class="buttons">
+      <% if user_signed_in? %>
+        <%= button_to(
+          "Log Out",
+          destroy_user_session_path,
+          class:"link-to",
+          method: :delete
+        ) %>
+        <span class="username"><%= current_user.username %></span>
+      <% else %>
+        <%= link_to(
+          "Sign Up",
+          new_user_registration_path,
+          class:"link-to"
+        ) %>
+        <span style="padding-right: 32px;"></span>
+        <%= link_to(
+          "Log In",
+          user_session_path,
+          class:"link-to"
+        ) %>
+      <% end %>
+    </div>
     <% flash.each do |type, msg| %>
       <div class="<%= type %>" style="color: green">
         <%= msg %>
