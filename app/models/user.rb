@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :trackable
 
-  has_many :events, foreign_key: :creator_id
+  has_many :events, foreign_key: :creator_id, dependent: :delete_all
 
   has_many :invites_received, class_name: 'Invite', foreign_key: :attendee_id
   has_many :attended_events, through: :invites_received, source: :event
