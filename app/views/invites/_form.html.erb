@@ -4,6 +4,8 @@
     <%# form.label :event_id %>
     <%# form.collection_select :event_id, Event.where(creator_id: current_user.id), :id, :date, prompt: false %>
     <%= form.hidden_field :event_id, value: params[:event_id]%>
+    <%# todo: hidden_field above stops working when page reloads %>
+    <%# todo: prevent user from changing event_id manually with developer tools %>
     <%= form.label :attendee_id %>
     <%= form.collection_select :attendee_id, User.where.not(id: current_user.id), :id, :username, prompt: true %>
   </div>
