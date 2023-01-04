@@ -1,0 +1,16 @@
+<h1>Invite Information</h1>
+
+<div id="<%= dom_id @invite %>">
+  <p>
+    <strong>From:</strong>
+    <%= @invite.event.creator.username %>
+  </p>
+
+  <p>
+    <strong>Date:</strong>
+    <%= @invite.event.date %>
+  </p>
+
+</div>
+
+<%= link_to "Back to events", root_path %>
