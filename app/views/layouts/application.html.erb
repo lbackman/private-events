@@ -13,6 +13,7 @@
   <body>
     <div class="buttons">
       <% if user_signed_in? %>
+        <%= link_to "My page", current_user %>
         <%= button_to(
           "Log Out",
           destroy_user_session_path,
