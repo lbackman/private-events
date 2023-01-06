@@ -1,16 +1,16 @@
-<%= form_with model: invite do |form| %>
+<%= form_with scope: @invites, url: event_invites_url, method: :post do |form| %>
   
   <div>
     <%# form.label :event_id %>
     <%# form.collection_select :event_id, Event.where(creator_id: current_user.id), :id, :date, prompt: false %>
-    <%= form.hidden_field :event_id, value: params[:event_id]%>
+    <%# form.hidden_field :event_id, value: params[:event_id]%>
     <%# todo: hidden_field above stops working when page reloads %>
     <%# todo: prevent user from changing event_id manually with developer tools %>
-    <%= form.label :attendee_id %>
-    <%= form.collection_select :attendee_id, User.where.not(id: current_user.id), :id, :username, prompt: true %>
+    <%# form.label :attendee_id %>
+    <%= form.collection_check_boxes :attendee_id, User.where.not(id: current_user.id).where.not(id: Invite.where(event_id: @event.id).pluck(:attendee_id)).order(:created_at), :id, :username %>
   </div>
-
+  <br>
   <div>
-    <%= form.submit %>
+    <%= form.submit "Send" %>
   </div>
 <% end %>

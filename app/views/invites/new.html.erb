@@ -1,8 +1,8 @@
 <h1>New Invite</h1>
-<% if @invite.errors.any? %>
+<% if @invites.errors.any? %>
   <h3>The following errors prevented the invite from being sent:</h3>
   <ul>
-    <% @invite.errors.messages.each do |msg| %>
+    <% @invites.errors.messages.each do |msg| %>
      <li><%= msg %></li> 
     <% end %>
   </ul>
@@ -10,6 +10,6 @@
 
 <p>Choose which guests to invite to your event!</p>
 <br>
-<%= render 'form', invite: @invite %>
+<%= render 'form' %>
 <br>
 <%= link_to 'Back', "/events/#{params[:event_id]}" %>

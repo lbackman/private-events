@@ -3,8 +3,17 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   # get 'events/index'
-  resources :events
-  resources :invites
+  # resources :events
+  # resources :invites
+
+  resources :events do
+    resources :invites, only: [:index, :new, :create, :destroy]
+  end
+
+  resources :users do
+    resources :invites, only: [:show, :edit, :update]
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

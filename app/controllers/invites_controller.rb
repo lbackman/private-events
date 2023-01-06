@@ -1,16 +1,35 @@
 class InvitesController < ApplicationController
+  before_action :get_event, only: [:index, :new, :create, :destroy]
+  before_action :get_attendee, only: [:show, :edit, :update]
+
   def new
-    @invite = Invite.new
+    @invites = @event.invites.build
   end
 
   def create
-    @invite = Invite.new(invite_params)
-  
-    if @invite.save
-      redirect_to "/events/#{params[:event_id]}", notice: "Invite was successfully sent."
-    else
-      render :new, status: :unprocessable_entity
+    begin
+      Invite.transaction do
+        # binding.irb
+        @invites = @event.invites.create!(invites_params)
+        redirect_to event_path(@event), notice: "Succesfully sent"
+      end
+    rescue ActiveRecord::RecordInvalid => exception
+      # omitting the exception type rescues all StandardErrors
+      @invites = {
+        error: {
+          status: 422,
+          message: exception
+        }
+      }
     end
+    # binding.irb
+    # @invites = @event.invites.build(invites_params)
+
+    # if @invites.save
+    #   redirect_to @event, notice: "Invite(s) sent successfully"
+    # else
+    #   render :new, status: :unprocessable_entity
+    # end
   end
 
   def show
@@ -28,7 +47,23 @@ class InvitesController < ApplicationController
 
   private
 
-    def invite_params
-      params.require(:invite).permit(:event_id, :attendee_id)
+    def invites_params
+      # params.permit(invites: [:attendee_id]).require(:invites)
+      invites = { invites: [] }
+      params[:invite][:attendee_id].each do |id|
+        unless id == ''
+          invites[:invites] << {attendee_id: id.to_i}
+        end
+      end
+      invite_params = ActionController::Parameters.new(invites)
+      invite_params.permit(invites: [:attendee_id]).require(:invites)
+    end
+
+    def get_event
+      @event = Event.find(params[:event_id])
+    end
+
+    def get_attendee
+      @attendee = User.find(params[:attendee_id])
     end
 end
