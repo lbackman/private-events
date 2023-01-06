@@ -11,13 +11,19 @@
     <%= @user.username %>
   </p>
 
-  <% my_invites = Invite.where(attendee_id: current_user.id) %>
+  <% my_events  = Event.where(creator_id: current_user.id) %>
+  <% my_invites = Invite.where(attendee_id: current_user.id).where(accepted: nil) %>
  
-    <strong>My received invites:</strong>
-    <% my_invites.each do |invite| %>
-      <p>Date: <%= invite.event.date %></p>
-      <p>From: <%= invite.event.creator.username %></p>
-    <% end %>
+  <strong>My events:</strong>
+  <% my_events.each do |event| %>
+    <p>Date: <%= event.date %></p>
+  <% end %>
+
+  <strong>My received invites:</strong>
+  <% my_invites.each do |invite| %>
+    <p>Date: <%= invite.event.date %></p>
+    <p>From: <%= invite.event.creator.username %></p>
+  <% end %>
 
 
 </div>
