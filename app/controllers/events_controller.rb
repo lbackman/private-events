@@ -24,6 +24,14 @@ class EventsController < ApplicationController
     end
   end
 
+  def destroy
+    @user = current_user
+    @event = @user.events.find(params[:id])
+    @event.destroy
+
+    redirect_to root_path, status: :see_other, notice: "Event canceled."
+  end
+
   private
 
     def event_params
