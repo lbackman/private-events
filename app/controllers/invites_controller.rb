@@ -1,6 +1,6 @@
 class InvitesController < ApplicationController
   before_action :get_event, only: [:index, :new, :create, :destroy]
-  before_action :get_attendee, only: [:show, :edit, :update]
+  before_action :get_attendee, only: [:show, :edit, :update, :accept, :decline]
 
   def new
     @invites = @event.invites.build
@@ -42,8 +42,22 @@ class InvitesController < ApplicationController
   def update
   end
 
+  def accept
+    @invite = @attendee.invites_received.find(params[:id])
+    @invite.update_attribute(:accepted, true)
+
+    redirect_to user_invite_path(@attendee, @invite)
+  end
+
+  def decline
+    @invite = @attendee.invites_received.find(params[:id])
+    @invite.update_attribute(:accepted, false)
+
+    redirect_to user_invite_path(@attendee, @invite)
+  end
+
   def destroy
-    @invite = Invite.find(params[:id])
+    @invite = @event.invites.find(params[:id])
     @invite.destroy
 
     redirect_to event_invites_path(@event), status: :see_other

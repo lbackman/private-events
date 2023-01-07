@@ -11,7 +11,14 @@ Rails.application.routes.draw do
   end
 
   resources :users do
-    resources :invites, only: [:show, :edit, :update]
+    resources :invites, only: [:show, :edit, :update] do
+      member do
+        patch :accept
+        put :accept
+        patch :decline
+        put :decline
+      end
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
