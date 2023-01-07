@@ -1,0 +1,25 @@
+<h1>Guests invited to event on <%= @event.date %></h1>
+
+<% pending_invites  = Invite.where(event_id: @event.id, accepted: nil) %>
+<% accepted_invites = Invite.where(event_id: @event.id, accepted: true) %>
+<% pending_count    = pending_invites.count %>
+<% accepted_count   = accepted_invites.count %>
+
+<% if accepted_invites.any? %>
+  <h2><%="#{accepted_count} #{'Guest'.pluralize(accepted_count)} attending"%></h2>
+  <% accepted_invites.each do |invite| %>
+    <%= link_to invite.attendee.username, user_path(invite.attendee) %>
+  <% end %>
+<% end %>
+
+<% if pending_invites.any? %>
+  <h2><%="#{pending_count} #{'Guest'.pluralize(pending_count)} pending"%></h2>
+  <% pending_invites.each do |invite| %>
+    <div>
+      <%= link_to invite.attendee.username, user_path(invite.attendee) %>
+      <%= link_to "Rescind invite", event_invite_path(invite.event, invite), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= link_to 'Back to event', event_path(@event) %>

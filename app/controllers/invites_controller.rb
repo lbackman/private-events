@@ -43,6 +43,10 @@ class InvitesController < ApplicationController
   end
 
   def destroy
+    @invite = Invite.find(params[:id])
+    @invite.destroy
+
+    redirect_to event_invites_path(@event), status: :see_other
   end
 
   private

@@ -14,7 +14,10 @@
 </div>
 
 <% if current_user.id == @event.creator_id %>
-  <%= link_to "Send invites", new_event_invite_path(event_id: @event.id) %>
+  <div><%= link_to "Send invites", new_event_invite_path(event_id: @event.id) %></div>
+  <% if Invite.where(event_id: @event.id).any? %>
+    <div><%= link_to "Invites sent", event_invites_path(event_id: @event.id) %></div>
+  <% end %>
 <% end %>
 
-<%= link_to "Back to events", root_path %>
+<div><%= link_to "Back to events", root_path %></div>
