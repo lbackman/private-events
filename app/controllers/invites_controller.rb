@@ -1,6 +1,8 @@
 class InvitesController < ApplicationController
   before_action :get_event, only: [:index, :new, :create, :destroy]
   before_action :get_attendee, only: [:show, :edit, :update, :accept, :decline]
+  before_action :ensure_correct_creator!, only: [:index, :new, :create, :destroy]
+  before_action :ensure_correct_attendee!, only: [:show, :edit, :update, :accept, :decline]
 
   def new
     @invites = @event.invites.build
@@ -83,5 +85,17 @@ class InvitesController < ApplicationController
 
     def get_attendee
       @attendee = User.find(params[:user_id])
+    end
+
+    def ensure_correct_creator!
+      unless current_user.id == @event.creator_id
+        redirect_to event_path(@event), message: "can't send invites for other users"
+      end
+    end
+
+    def ensure_correct_attendee!
+      unless current_user.id == @attendee.id
+        redirect_to user_path(@attendee), message: "can't edit other users' invites"
+      end
     end
 end
