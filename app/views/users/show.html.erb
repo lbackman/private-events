@@ -11,21 +11,32 @@
     <%= @user.username %>
   </p>
 
-  <% my_events  = Event.where(creator_id: current_user.id) %>
-  <% my_invites = Invite.where(attendee_id: current_user.id).where(accepted: nil) %>
- 
-  <strong>My events:</strong>
+  <% my_events  = Event.where(creator_id: @user.id) %>
+
+  <strong><%= current_user == @user ? "My events" : "Events hosted by #{@user.username}" %>:</strong>
   <% my_events.each do |event| %>
-    <p>Date: <%= event.date %></p>
+    <p>Date: <%= link_to event.date, event_path(event) %></p>
   <% end %>
 
-  <strong>My received invites:</strong>
-  <% my_invites.each do |invite| %>
-    <p>Date: <%= invite.event.date %></p>
-    <p>From: <%= invite.event.creator.username %></p>
-  <% end %>
+  <% if @user == current_user %>
+    <% my_invites = Invite.where(attendee_id: current_user.id) %>
+    <% my_pending = my_invites.where(accepted: nil) %>
+    <% my_accepted = my_invites.where(accepted: true) %>
+    <%# my_events_attending = Event.where(id: my_accepted.event_id) %>
 
+    <strong>Events I will attend:</strong>
+    <%# my_events_attending.each do |event| %>
+      <p>Date: <%# event.date %></p>
+      <p>From: <%# event.creator.username %></p>
+    <%# end %>
 
-</div>
+    <strong>My received invites:</strong>
+    <% my_invites.each do |invite| %>
+      <%#binding.irb%>
+      <p>Date: <%= link_to invite.event.date, user_invite_path(invite.attendee, invite) %></p>
+      <p>From: <%= link_to invite.event.creator.username, user_path(invite.event.creator) %></p>
+    <% end %>
+  </div>
+<% end %>
 
 <%= link_to "Back to events", root_path %>

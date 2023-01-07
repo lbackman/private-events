@@ -64,6 +64,6 @@ class InvitesController < ApplicationController
     end
 
     def get_attendee
-      @attendee = User.find(params[:attendee_id])
+      @attendee = User.find(params[:user_id])
     end
 end
