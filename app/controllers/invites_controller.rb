@@ -35,7 +35,9 @@ class InvitesController < ApplicationController
   end
 
   def show
-    @invite = Invite.find(params[:id])
+    @invite = Invite.find_by_id(params[:id])
+
+    content_not_found unless @invite.present?
   end
 
   def edit

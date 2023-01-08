@@ -6,7 +6,9 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event = Event.find_by_id(params[:id])
+
+    content_not_found unless @event.present?
   end
 
   def new

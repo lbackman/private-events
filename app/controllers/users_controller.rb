@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @user.events
+    @user = User.find_by_id(params[:id])
+
+    content_not_found unless @user.present?
   end
 end

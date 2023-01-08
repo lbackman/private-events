@@ -7,4 +7,8 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
   end
+
+  def content_not_found
+    render file: "#{Rails.root}/public/404.html", layout: true, status: :not_found
+  end
 end
