@@ -15,7 +15,7 @@
 
   <strong><%= current_user == @user ? "My events" : "Events hosted by #{@user.username}" %>:</strong>
   <% my_events.each do |event| %>
-    <p>Date: <%= link_to event.date, event_path(event) %></p>
+    <p>Date: <%= link_to date_informal(event.date), event_path(event) %></p>
   <% end %>
 
   <% if @user == current_user %>
@@ -28,7 +28,7 @@
       <strong>Events I will attend:</strong>
       <% my_events_attending.each do |event| %>
       <%#binding.irb%>
-        <p>Date: <%= link_to event.date, event_path(event) %></p>
+        <p>Date: <%= link_to date_informal(event.date), event_path(event) %></p>
         <p>From: <%= link_to event.creator.username, user_path(event.creator) %></p>
       <% end %>
     <% end %>
@@ -36,7 +36,7 @@
     <strong>My received invites:</strong>
     <% my_invites.each do |invite| %>
       <%#binding.irb%>
-      <p>Invite received: <%= link_to invite.created_at, user_invite_path(invite.attendee, invite) %></p>
+      <p>Invite received: <%= link_to date_informal(invite.created_at), user_invite_path(invite.attendee, invite) %></p>
       <p>From: <%= link_to invite.event.creator.username, user_path(invite.event.creator) %></p>
     <% end %>
   <% end %> 

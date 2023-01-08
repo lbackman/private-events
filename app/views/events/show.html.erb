@@ -1,22 +1,38 @@
 <h1>Event Information</h1>
 
 <div id="<%= dom_id @event %>">
-  <p>
+  <div>
     <strong>Host:</strong>
-    <%= @event.creator.email %>
-  </p>
+    <%= @event.creator.username %>
+  </div>
 
-  <p>
+  <div>
     <strong>Date:</strong>
-    <%= @event.date %>
-  </p>
+    <%= date_informal(@event.date) %>
+  </div>
 
-</div>
+  <div>
+    <strong>Attendees:</strong>
+    <% User.where(id: @event.invites.where(accepted: true).pluck(:attendee_id)).each do |attendee| %>
+      <%= link_to attendee.username, user_path(attendee) %>
+    <% end %>
+  </div>
+
+  <div>
+    <strong>Invitees:</strong>
+    <% User.where(id: @event.invites.where(accepted: nil).pluck(:attendee_id)).each do |attendee| %>
+      <%= link_to attendee.username, user_path(attendee) %>
+    <% end %>
+  </div>
 
 <% if current_user.id == @event.creator_id %>
-  <div><%= link_to "Send invites", new_event_invite_path(event_id: @event.id) %></div>
+  <div>
+    <%= link_to "Send invites", new_event_invite_path(event_id: @event.id) %>
+  </div>
   <% if Invite.where(event_id: @event.id).any? %>
-    <div><%= link_to "View invites sent", event_invites_path(event_id: @event.id) %></div>
+    <div>
+      <%= link_to "View invites sent", event_invites_path(event_id: @event.id) %>
+    </div>
   <% end %>
    <div>
     <%= link_to "Cancel event",
