@@ -7,22 +7,27 @@
     <% end %>
   </ul>
 <% end %>
+<% if @event.date < Time.now %>
+  <p>This event has already taken place.</p>
+  <p>Create a new event?</p>
+  <div> <%= link_to "New event", new_event_path %> </div>
+<% else %>
+  <p>Choose which guests to invite to your event!</p>
 
-<p>Choose which guests to invite to your event!</p>
-
-<%= form_with scope: @invites, url: event_invites_url, method: :post do |form| %>
-  <div>
-    <%= form.collection_check_boxes(
-            :attendee_id,
-            User.where.not(id: current_user.id).where.not(id: Invite.where(event_id: params[:event_id]).pluck(:attendee_id)).order(:created_at),
-            :id,
-            :username)
-      %>
-  </div>
-  <br>
-  <div>
-    <%= form.submit "Send" %>
-  </div>
+  <%= form_with scope: @invites, url: event_invites_url, method: :post do |form| %>
+    <div>
+      <%= form.collection_check_boxes(
+              :attendee_id,
+              User.where.not(id: current_user.id).where.not(id: Invite.where(event_id: params[:event_id]).pluck(:attendee_id)).order(:created_at),
+              :id,
+              :username)
+        %>
+    </div>
+    <br>
+    <div>
+      <%= form.submit "Send" %>
+    </div>
+  <% end %>
 <% end %>
 <br>
 
