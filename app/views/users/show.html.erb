@@ -11,11 +11,22 @@
     <%= @user.username %>
   </div>
 
-  <% my_events  = Event.where(creator_id: @user.id) %>
+  <% all_events = Event.where(creator_id: @user.id) %>
+  <% past_events = all_events.where("date < ?", Time.now) %>
+  <% future_events = all_events.where("date > ?", Time.now) %>
 
-  <strong><%= current_user == @user ? "My events" : "Events hosted by #{@user.username}" %>:</strong>
-  <% my_events.each do |event| %>
-    <div>Date: <%= link_to date_informal(event.date), event_path(event) %></div>
+  <% if past_events.any? %>
+    <strong><%= current_user == @user ? "My past events" : "Past events hosted by #{@user.username}" %>:</strong>
+    <% past_events.each do |event| %>
+      <div>Date: <%= link_to date_informal(event.date), event_path(event) %></div>
+    <% end %>
+  <% end %>
+
+  <% if future_events.any? %>
+    <strong><%= current_user == @user ? "My upcoming events" : "Upcoming events hosted by #{@user.username}" %>:</strong>
+    <% future_events.each do |event| %>
+      <div>Date: <%= link_to date_informal(event.date), event_path(event) %></div>
+    <% end %>
   <% end %>
 
   <% if @user == current_user %>
@@ -27,7 +38,6 @@
       <% my_events_attending = Event.where(id: my_accepted.pluck(:event_id)) %>
       <strong>Events I will attend:</strong>
       <% my_events_attending.each do |event| %>
-      <%#binding.irb%>
         <div>Date: <%= link_to date_informal(event.date), event_path(event) %></div>
         <div>Host: <%= link_to event.creator.username, user_path(event.creator) %></div>
       <% end %>
@@ -35,9 +45,9 @@
 
     <strong>My received invites:</strong>
     <% my_invites.each do |invite| %>
-      <%#binding.irb%>
-      <div>Invite received: <%= link_to date_informal(invite.created_at), user_invite_path(invite.attendee, invite) %></div>
+      <div>Event: <%= link_to date_informal(invite.event.date), event_path(invite.event) %></div>
       <div>From: <%= link_to invite.event.creator.username, user_path(invite.event.creator) %></div>
+      <div><%= link_to "Respond to invite", user_invite_path(invite.attendee, invite) %></div>
     <% end %>
   <% end %> 
 </div>
