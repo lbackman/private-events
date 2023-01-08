@@ -21,20 +21,22 @@
       Not going
     <% end %>
   </div>
-
-  <div>
-    <strong>Respond:</strong>
-    <% if @invite.accepted.nil? %>
-      <%= button_to 'Accept', accept_user_invite_path(current_user, @invite), method: :put %>
-      <%= button_to 'Decline', decline_user_invite_path(current_user, @invite), method: :put %>
-    <% elsif @invite.accepted %>
-      <%= button_to 'Tentative', tentative_user_invite_path(current_user, @invite), method: :put %>
-      <%= button_to 'Decline', decline_user_invite_path(current_user, @invite), method: :put %>
-    <% else %>
-      <%= button_to 'Accept', accept_user_invite_path(current_user, @invite), method: :put %>
-      <%= button_to 'Tentative', tentative_user_invite_path(current_user, @invite), method: :put %>
-    <% end %>
-  </div>
+  
+  <% if @invite.event.date > Time.now %>
+    <div>
+      <strong>Respond:</strong>
+      <% if @invite.accepted.nil? %>
+        <%= button_to 'Accept', accept_user_invite_path(current_user, @invite), method: :put %>
+        <%= button_to 'Decline', decline_user_invite_path(current_user, @invite), method: :put %>
+      <% elsif @invite.accepted %>
+        <%= button_to 'Tentative', tentative_user_invite_path(current_user, @invite), method: :put %>
+        <%= button_to 'Decline', decline_user_invite_path(current_user, @invite), method: :put %>
+      <% else %>
+        <%= button_to 'Accept', accept_user_invite_path(current_user, @invite), method: :put %>
+        <%= button_to 'Tentative', tentative_user_invite_path(current_user, @invite), method: :put %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
 <%= link_to "Back to my page", user_path(current_user) %>
