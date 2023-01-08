@@ -17,7 +17,11 @@
   <% pending_invites.each do |invite| %>
     <div>
       <%= link_to invite.attendee.username, user_path(invite.attendee) %>
-      <%= link_to "Rescind invite", event_invite_path(invite.event, invite), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+      <% if @event.date > Time.now %>
+        <%= link_to "Rescind invite",
+                    event_invite_path(invite.event, invite),
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+      <% end %>
     </div>
   <% end %>
 <% end %>
