@@ -34,6 +34,7 @@
       <%= link_to "View invites sent", event_invites_path(event_id: @event.id) %>
     </div>
   <% end %>
+  <% if @event.date > Time.now %>
    <div>
     <%= link_to "Cancel event",
             event_path(event_id: @event.id),
@@ -42,6 +43,7 @@
               turbo_confirm: "Are you sure you want to cancel this event?"
               } %>
     </div>
+  <% end %>
 <% end %>
 
 <div><%= link_to "Back to events", root_path %></div>
