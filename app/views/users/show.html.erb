@@ -30,7 +30,9 @@
   <% end %>
 
   <% if @user == current_user %>
-    <% my_invites = Invite.where(attendee_id: current_user.id) %>
+    <% my_invite_ids = Event.joins(:invites).where('date > ?', Time.now).where('invites.attendee_id = ?', current_user.id).pluck('invites.id') %>
+    <% my_invites = Invite.where(id: my_invite_ids) %>
+    <%# my_invites = Invite.where(attendee_id: current_user.id) %>
     <% my_pending = my_invites.where(accepted: nil) %>
     <% my_accepted = my_invites.where(accepted: true) %>
     
