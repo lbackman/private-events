@@ -1,5 +1,13 @@
 <h1>New Event</h1>
 <br>
+<% if @event.errors.any? %>
+  <h3>The following errors prevented the invite from being sent:</h3>
+  <ul>
+    <% @event.errors.full_messages.each do |msg| %>
+     <li><%= msg %></li> 
+    <% end %>
+  </ul>
+<% end %>
 <p>Choose a date for your event!</p>
 <br>
 <%= render 'form', event: @event %>
