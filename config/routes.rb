@@ -11,12 +11,14 @@ Rails.application.routes.draw do
   end
 
   resources :users do
-    resources :invites, only: [:show, :edit, :update] do
+    resources :invites, only: :show do
       member do
         patch :accept
         put :accept
         patch :decline
         put :decline
+        patch :tentative
+        put :tentative
       end
     end
   end

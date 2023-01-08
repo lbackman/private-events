@@ -1,8 +1,8 @@
 class InvitesController < ApplicationController
   before_action :get_event, only: [:index, :new, :create, :destroy]
-  before_action :get_attendee, only: [:show, :edit, :update, :accept, :decline]
+  before_action :get_attendee, only: [:show, :accept, :decline, :tentative]
   before_action :ensure_correct_creator!, only: [:index, :new, :create, :destroy]
-  before_action :ensure_correct_attendee!, only: [:show, :edit, :update, :accept, :decline]
+  before_action :ensure_correct_attendee!, only: [:show, :accept, :decline, :tentative]
 
   def new
     @invites = @event.invites.build
@@ -56,6 +56,13 @@ class InvitesController < ApplicationController
   def decline
     @invite = @attendee.invites_received.find(params[:id])
     @invite.update_attribute(:accepted, false)
+
+    redirect_to user_invite_path(@attendee, @invite)
+  end
+
+  def tentative
+    @invite = @attendee.invites_received.find(params[:id])
+    @invite.update_attribute(:accepted, nil)
 
     redirect_to user_invite_path(@attendee, @invite)
   end
