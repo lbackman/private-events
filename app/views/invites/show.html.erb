@@ -1,17 +1,17 @@
 <h1>Invite Information</h1>
 
 <div id="<%= dom_id @invite %>">
-  <p>
+  <div>
     <strong>From:</strong>
     <%= @invite.event.creator.username %>
-  </p>
+  </div>
 
-  <p>
+  <div>
     <strong>Date:</strong>
-    <%= date_informal(@invite.event.date) %>
-  </p>
+    <%= date_time_informal(@invite.event.date) %>
+  </div>
 
-  <p>
+  <div>
     <strong>Status:</strong>
     <% if @invite.accepted %>
       Going
@@ -20,9 +20,9 @@
     <% else %>
       Declined
     <% end %>
-  </p>
+  </div>
 
-  <p>
+  <div>
     <strong>Respond:</strong>
     <% if @invite.accepted.nil? %>
       <%= button_to 'Accept', accept_user_invite_path(current_user, @invite), method: :put %>
@@ -32,7 +32,7 @@
     <% else %>
       <%= button_to 'Accept', accept_user_invite_path(current_user, @invite), method: :put %>
     <% end %>
-  </p>
+  </div>
 </div>
 
 <%= link_to "Back to my page", user_path(current_user) %>

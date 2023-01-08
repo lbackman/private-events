@@ -29,7 +29,7 @@
       <% my_events_attending.each do |event| %>
       <%#binding.irb%>
         <p>Date: <%= link_to date_informal(event.date), event_path(event) %></p>
-        <p>From: <%= link_to event.creator.username, user_path(event.creator) %></p>
+        <p>Host: <%= link_to event.creator.username, user_path(event.creator) %></p>
       <% end %>
     <% end %>
 

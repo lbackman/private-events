@@ -1,4 +1,4 @@
-<h1>Guests invited to event on <%= @event.date %></h1>
+<h1>Guests invited to event on <%= date_informal(@event.date) %></h1>
 
 <% pending_invites  = Invite.where(event_id: @event.id, accepted: nil) %>
 <% accepted_invites = Invite.where(event_id: @event.id, accepted: true) %>

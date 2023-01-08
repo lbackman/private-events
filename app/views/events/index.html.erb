@@ -1,7 +1,27 @@
 <h1>Events</h1>
+<% upcoming = @events.where("date > ?", Time.now).order(:date)%>
+<% past = @events.where("date < ?", Time.now).order(:date)%>
 
-<div id="events">
-  <% @events.each do |event| %>
+<% if upcoming.any? %>
+  <h2>Upcoming events</h2>
+  <div id="upcoming_events">
+    <% upcoming.each do |event| %>
+      <div class="event">
+        <div class="time">
+          Date: <%= link_to date_informal(event.date), event_path(event) %>
+        </div>
+        <div class="creator">
+          Host: <%= link_to event.creator.username, user_path(event.creator) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<% if past.any? %>
+<h2>Past events</h2>
+<div id="past_events">
+  <% past.each do |event| %>
     <div class="event">
       <div class="time">
         Date: <%= link_to date_informal(event.date), event_path(event) %>
@@ -12,6 +32,7 @@
     </div>
   <% end %>
 </div>
+<% end %>
 <br>
 
 <%= link_to 'New Event', 'events/new' %>
