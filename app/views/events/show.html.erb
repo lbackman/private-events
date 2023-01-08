@@ -3,27 +3,29 @@
 <div id="<%= dom_id @event %>">
   <div>
     <strong>Host:</strong>
-    <%= @event.creator.username %>
+    <%= link_to @event.creator.username, user_path(@event.creator) %>
   </div>
 
   <div>
-    <strong>Date:</strong>
+    <strong>Date and time:</strong>
     <%= date_time_informal(@event.date) %>
   </div>
 
   <div>
-    <strong>Attendees:</strong>
+    <strong><%= @event.date < Time.now ? "Guests" : "Confirmed guests" %>:</strong>
     <% User.where(id: @event.invites.where(accepted: true).pluck(:attendee_id)).each do |attendee| %>
       <%= link_to attendee.username, user_path(attendee) %>
     <% end %>
   </div>
 
-  <div>
-    <strong>Invitees:</strong>
-    <% User.where(id: @event.invites.where(accepted: nil).pluck(:attendee_id)).each do |attendee| %>
-      <%= link_to attendee.username, user_path(attendee) %>
-    <% end %>
-  </div>
+  <% if @event.date > Time.now%>
+    <div>
+      <strong>Tentative guests:</strong>
+      <% User.where(id: @event.invites.where(accepted: nil).pluck(:attendee_id)).each do |attendee| %>
+        <%= link_to attendee.username, user_path(attendee) %>
+      <% end %>
+    </div>
+  <% end %>
 
 <% if current_user.id == @event.creator_id %>
   <div>
