@@ -2,19 +2,14 @@
 
 <div id="events">
   <% @events.each do |event| %>
-    <%= link_to event do %>
-      <div class="event">
-        <div class="creator"> Host: 
-        
-          <% unless event.creator.username %>
-            <%= event.creator.email %></div>
-          <% else %>
-            <%= event.creator.username %></div>
-          <% end %>
-
-        <div class="time"> Date: <%= date_informal(event.date) %></div>
+    <div class="event">
+      <div class="time">
+        Date: <%= link_to date_informal(event.date), event_path(event) %>
       </div>
-    <% end %>
+      <div class="creator">
+        Host: <%= link_to event.creator.username, user_path(event.creator) %>
+      </div>
+    </div>
   <% end %>
 </div>
 <br>
