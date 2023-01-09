@@ -12,4 +12,12 @@ class User < ApplicationRecord
 
   validates :username, uniqueness: true, length: { minimum: 4 }
   validates :email, uniqueness: true
+
+  def self.attending(event)
+    where(id: event.invites.where(accepted: true).pluck(:attendee_id))
+  end
+
+  def self.pending(event)
+    where(id: event.invites.where(accepted: nil).pluck(:attendee_id))
+  end
 end

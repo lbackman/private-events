@@ -11,21 +11,7 @@
     <%= date_time_informal(@event.date) %>
   </div>
 
-  <div>
-    <strong><%= past_or_future_guests(@event) %>:</strong>
-    <% User.where(id: @event.invites.where(accepted: true).pluck(:attendee_id)).each do |attendee| %>
-      <%= link_to attendee.username, user_path(attendee) %>
-    <% end %>
-  </div>
-
-  <% if @event.date > Time.now%>
-    <div>
-      <strong>Tentative guests:</strong>
-      <% User.where(id: @event.invites.where(accepted: nil).pluck(:attendee_id)).each do |attendee| %>
-        <%= link_to attendee.username, user_path(attendee) %>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render 'guests', event: @event %>
 
 <% if current_user.id == @event.creator_id %>
   <div>

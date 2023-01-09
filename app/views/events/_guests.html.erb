@@ -1,0 +1,15 @@
+<div>
+  <strong><%= past_or_future_guests(event) %>:</strong>
+  <% User.attending(event).each do |attendee| %>
+    <%= link_to attendee.username, user_path(attendee) %>
+  <% end %>
+</div>
+
+<% if event.date > Time.now%>
+  <div>
+    <strong>Tentative guests:</strong>
+    <% User.pending(event).each do |attendee| %>
+      <%= link_to attendee.username, user_path(attendee) %>
+    <% end %>
+  </div>
+<% end %>
