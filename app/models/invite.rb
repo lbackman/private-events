@@ -4,11 +4,7 @@ class Invite < ApplicationRecord
 
   validates :event_id, uniqueness: { scope: :attendee_id, message: "can't have more than one invite per attendee."}
 
-  def self.accepted(event)
-    where(event_id: event.id, accepted: true)
-  end
+  scope :accepted, ->(event) { where(event_id: event.id, accepted: true) }
 
-  def self.pending(event)
-    where(event_id: event.id, accepted: nil)
-  end
+  scope :pending,  ->(event) { where(event_id: event.id, accepted: nil) }
 end

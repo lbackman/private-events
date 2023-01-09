@@ -13,19 +13,11 @@ class User < ApplicationRecord
   validates :username, uniqueness: true, length: { minimum: 4 }
   validates :email, uniqueness: true
 
-  def self.attending(event)
-    where(id: event.invites.where(accepted: true).pluck(:attendee_id))
-  end
+  scope :attending,   ->(event) { where(id: event.invites.where(accepted: true).pluck(:attendee_id)) }
 
-  def self.pending(event)
-    where(id: event.invites.where(accepted: nil).pluck(:attendee_id))
-  end
+  scope :pending,     ->(event) { where(id: event.invites.where(accepted: nil).pluck(:attendee_id)) }
 
-  def self.all_others(user)
-    where.not(id: user.id)
-  end
+  scope :all_others,  ->(user) { where.not(id: user.id) }
 
-  def self.not_invited(event_id)
-    where.not(id: Invite.where(event_id: event_id).pluck(:attendee_id))
-  end
+  scope :not_invited, ->(event_id) { where.not(id: Invite.where(event_id: event_id).pluck(:attendee_id)) }
 end

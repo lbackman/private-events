@@ -5,11 +5,7 @@ class Event < ApplicationRecord
 
   validates :date, comparison: { greater_than: Time.now, message: "of the event must be in the future!" }
 
-  def self.past
-    where("date < ?", Time.now).order(:date)
-  end
+  scope :past,   -> { where("date < ?", Time.now).order(:date) }
 
-  def self.future
-    where("date > ?", Time.now).order(:date)
-  end
+  scope :future, -> { where("date > ?", Time.now).order(:date) }
 end
