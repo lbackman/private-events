@@ -1,0 +1,10 @@
+<div>
+  <strong>Status:</strong>
+  <% if invite.accepted %>
+    Going
+  <% elsif invite.accepted.nil? %>
+    Awaiting response
+  <% else %>
+    Not going
+  <% end %>
+</div>
