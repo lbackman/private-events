@@ -9,4 +9,6 @@
 
 <%= render 'invites', invites: pending_invites, event: @event, count: pending_count, verb: 'pending' %>
 
-<%= link_to 'Back to event', event_path(@event) %>
+<div class="mb-3"><%= link_to 'Back to event', event_path(@event) %></div>
+
+<div class="mb-3"><%= link_to "Back to events", root_path %></div>

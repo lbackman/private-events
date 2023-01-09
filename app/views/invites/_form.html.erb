@@ -1,16 +1,25 @@
-<p>Choose which guests to invite to your event!</p>
+<% potential_invitees = User.all_others(current_user).not_invited(params[:event_id]) %>
 
-  <%= form_with scope: invites, url: event_invites_url, method: :post do |form| %>
+<% if potential_invitees.any? %>
+  <p>Choose which guests to invite to your event!</p>
+
+  <%= form_with scope: invites, url: event_invites_url, method: :post, class: "form-check" do |form| %>
+
+    <%= form.collection_check_boxes(
+          :attendee_id,
+          potential_invitees.order(:created_at),
+          :id,
+          :username) do |b| %>
+      <div class="container mb-3">
+        <%= b.check_box(class: "check-box-input")%>
+        <%= b.label(class: "check-box-label") %>
+      </div>
+    <% end %>
+    
     <div>
-      <%= form.collection_check_boxes(
-              :attendee_id,
-              User.all_others(current_user).not_invited(params[:event_id]).order(:created_at),
-              :id,
-              :username)
-        %>
-    </div>
-    <br>
-    <div>
-      <%= form.submit "Send" %>
+      <%= form.submit "Send", class: "btn btn-primary btn-sm" %>
     </div>
   <% end %>
+<% else %>
+  <p>You have already invited everyone!</p>
+<% end %>

@@ -1,11 +1,11 @@
 <h1><%= "#{@user.username} (#{@user.email})" %></h1>
 
-<div id="<%= dom_id @user %>">
+<div id="<%= dom_id @user %>" class="container">
   <% all_events = Event.where(creator_id: @user.id) %>
   <% past_events = all_events.past %>
   <% future_events = all_events.future %>
-  <% attended = Event.attended(@user) %>
-  <% attending = Event.attending(@user) %>
+  <% attended = Event.attended(@user).includes(:creator) %>
+  <% attending = Event.attending(@user).includes(:creator) %>
 
   <%= render 'own_event', events: past_events, user: @user, event_when: 'past' %>
 
@@ -18,4 +18,4 @@
   <%= render 'invites', user: @user %>
 </div>
 
-<%= link_to "Back to events", root_path %>
+<div class="mb-3"><%= link_to "Back to events", root_path %></div>

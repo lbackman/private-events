@@ -1,12 +1,20 @@
+<% default_location = "#{current_user.username}'s place" %>
 <%= form_with model: event do |form| %>
   
-  <div>
-    <%= form.label :date %><br>
-    <%= form.datetime_select :date %><br>
-    
-  </div>
+  <div class="container">
+    <div class="date mb-3">
+      <%= form.label :date, class: "form-label" %>
+      <%= form.datetime_local_field(:date, start_year: Time.now.year, class: "form-control") %>
+    </div>
 
-  <div>
-    <%= form.submit %>
+    <div class="location mb-3">
+      <%= form.label :location, class: "form-label" %>
+      <%= form.text_field(:location, value: default_location, class: "form-control") %>
+    </div>
+  
+
+    <div class="mb-3">
+      <%= form.submit(class: "btn btn-primary btn-sm") %>
+    </div>
   </div>
 <% end %>

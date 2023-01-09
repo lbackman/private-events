@@ -1,12 +1,12 @@
 <h1>Invite Information</h1>
 
 <div id="<%= dom_id @invite %>">
-  <div>
+  <div class="mb-3">
     <strong>From:</strong>
     <%= @invite.event.creator.username %>
   </div>
 
-  <div>
+  <div class="mb-3">
     <strong>Date:</strong>
     <%= date_time_informal(@invite.event.date) %>
   </div>
@@ -16,6 +16,6 @@
   <%= render 'respond', invite: @invite %>
 </div>
 
-<%= link_to "Back to my page", user_path(current_user) %>
+<div class="mb-3"><%= link_to "Back to my page", user_path(current_user) %></div>
 
-<%= link_to "Back to events", root_path %>
+<div class="mb-3"><%= link_to "Back to events", root_path %></div>

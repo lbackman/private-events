@@ -1,6 +1,8 @@
 <% if events.any? %>
-  <strong><%= user_hosted_events(current_user, user, event_when) %>:</strong>
-  <% events.each do |event| %>
-    <div>Date: <%= link_to date_informal(event.date), event_path(event) %></div>
-  <% end %>
+  <div class="mb-3">
+    <strong><%= user_hosted_events(current_user, user, event_when) %>:</strong>
+    <% events.each do |event| %>
+      <div>Date: <%= link_to date_informal(event.date), event_path(event) %></div>
+    <% end %>
+  </div>
 <% end %>

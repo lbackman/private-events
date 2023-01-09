@@ -1,10 +1,13 @@
 <% if events.any? %>
-  <h2><%= "#{event_when}"%> events</h2>
-  <div id="<%="#{event_when.downcase}_events"%>">
+  <h2 style="margin-top: 32px;"><%= "#{event_when}"%> events</h2>
+  <div id="<%="#{event_when.downcase}_events"%>" class="container">
     <% events.each do |event| %>
-      <div class="event">
+      <div class="event mb-3">
         <div class="time">
           Date: <%= link_to date_informal(event.date), event_path(event) %>
+        </div>
+        <div class="location">
+          Location: <%= event.location %>
         </div>
         <div class="creator">
           Host: <%= link_to event.creator.username, user_path(event.creator) %>

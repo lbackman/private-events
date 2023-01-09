@@ -1,14 +1,19 @@
 <h1>Event Information</h1>
 
-<div id="<%= dom_id @event %>">
-  <div>
+<div id="<%= dom_id @event %>" class="container">
+  <div class="mb-3">
     <strong>Host:</strong>
     <%= link_to @event.creator.username, user_path(@event.creator) %>
   </div>
 
-  <div>
+  <div class="mb-3">
     <strong>Date and time:</strong>
     <%= date_time_informal(@event.date) %>
+  </div>
+
+  <div class="mb-3">
+    <strong>Location:</strong>
+    <%= @event.location %>
   </div>
 
   <%= render 'guests', event: @event %>
@@ -16,4 +21,4 @@
   <%= render 'host_panel', event: @event %>
 </div>
 
-<div><%= link_to "Back to events", root_path %></div>
+<div class="mb-3"><%= link_to "Back to events", root_path %></div>

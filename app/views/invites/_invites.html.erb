@@ -1,13 +1,17 @@
 <% if invites.any? %>
-  <h2><%=guests_status(count, verb)%></h2>
-  <% invites.each do |invite| %>
-    <div>
-      <%= link_to invite.attendee.username, user_path(invite.attendee) %>
-      <% if future?(event) && verb == 'pending' %>
-        <%= link_to "Rescind invite",
-                    event_invite_path(invite.event, invite),
-                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-      <% end %>
-    </div>
-  <% end %>
+  <div class="container">
+    <h3><%=guests_status(count, verb)%></h2>
+    <% invites.each do |invite| %>
+      <div class="mb-3">
+        <%= link_to invite.attendee.username, user_path(invite.attendee) %>
+        <% if future?(event) && verb == 'pending' %>
+          <%= link_to "Rescind invite",
+                      event_invite_path(invite.event, invite),
+                      data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                      class: "btn btn-sm btn-danger",
+                      style: "margin-left: 18px;" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 <% end %>

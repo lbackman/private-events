@@ -8,8 +8,8 @@
     <% end %>
   </ul>
 <% end %>
-<p>Choose a date for your event!</p>
-<br>
+<p>Choose a date and location for your event!</p>
+
 <%= render 'form', event: @event %>
-<br>
-<%= link_to 'Back', root_path %>
+
+<div class="mb-3"><%= link_to 'Back to events', root_path %></div>

@@ -4,4 +4,8 @@
 
 <%= render 'events', events: @past_events, event_when: 'Past' %>
 
-<%= link_to 'New Event', 'events/new' %>
+<div class="mb-3">
+  <%= link_to 'New Event',
+        new_event_path,
+        class: "btn btn-secondary mb-3" %>
+</div>

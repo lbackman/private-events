@@ -1,15 +1,19 @@
-<div>
+<div class="mb-3">
   <strong><%= past_or_future_guests(event) %>:</strong>
-  <% User.attending(event).each do |attendee| %>
-    <%= link_to attendee.username, user_path(attendee) %>
-  <% end %>
+  <ul>
+    <% User.attending(event).each do |attendee| %>
+      <li><%= link_to attendee.username, user_path(attendee) %></li>
+    <% end %>
+  </ul>
 </div>
 
 <% if future?(event) %>
-  <div>
+  <div class="mb-3">
     <strong>Tentative guests:</strong>
-    <% User.pending(event).each do |attendee| %>
-      <%= link_to attendee.username, user_path(attendee) %>
-    <% end %>
+    <ul>
+      <% User.pending(event).each do |attendee| %>
+        <li><%= link_to attendee.username, user_path(attendee) %></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
