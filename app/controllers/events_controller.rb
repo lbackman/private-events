@@ -1,8 +1,10 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  skip_before_action :authenticate_user!, only: :index
 
   def index
-    @events = Event.all
+    @future_events = Event.future.limit(10)
+
+    @past_events = Event.past.limit(10)
   end
 
   def show
@@ -12,12 +14,11 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new
+    @event = current_user.events.build
   end
 
   def create
-    @user = current_user
-    @event = @user.events.build(event_params)
+    @event = current_user.events.build(event_params)
   
     if @event.save
       redirect_to root_path, notice: "Event was successfully created."
@@ -27,8 +28,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @user = current_user
-    @event = @user.events.find(params[:id])
+    @event = current_user.events.find(params[:id])
     @event.destroy
 
     redirect_to root_path, status: :see_other, notice: "Event canceled."

@@ -1,7 +1,7 @@
 <h1>Events</h1>
 
-<%= render 'events', events: @events.future, event_when: 'Upcoming' %>
+<%= render 'events', events: @future_events, event_when: 'Upcoming' %>
 
-<%= render 'events', events: @events.past, event_when: 'Past' %>
+<%= render 'events', events: @past_events, event_when: 'Past' %>
 
 <%= link_to 'New Event', 'events/new' %>
