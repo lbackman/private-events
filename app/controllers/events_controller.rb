@@ -2,9 +2,9 @@ class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: :index
 
   def index
-    @future_events = Event.future.limit(10)
+    @future_events = Event.includes(:creator).future.limit(10)
 
-    @past_events = Event.past.limit(10)
+    @past_events = Event.includes(:creator).past.limit(10)
   end
 
   def show
