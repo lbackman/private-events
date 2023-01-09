@@ -13,25 +13,7 @@
 
   <%= render 'guests', event: @event %>
 
-<% if current_user.id == @event.creator_id %>
-  <div>
-    <%= link_to "Send invites", new_event_invite_path(event_id: @event.id) %>
-  </div>
-  <% if Invite.where(event_id: @event.id).any? %>
-    <div>
-      <%= link_to "View invites sent", event_invites_path(event_id: @event.id) %>
-    </div>
-  <% end %>
-  <% if future?(@event) %>
-   <div>
-    <%= link_to "Cancel event",
-            event_path(event_id: @event.id),
-            data: { 
-              turbo_method: :delete,
-              turbo_confirm: "Are you sure you want to cancel this event?"
-              } %>
-    </div>
-  <% end %>
-<% end %>
+  <%= render 'host_panel', event: @event %>
+</div>
 
 <div><%= link_to "Back to events", root_path %></div>
