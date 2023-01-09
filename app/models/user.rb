@@ -20,4 +20,12 @@ class User < ApplicationRecord
   def self.pending(event)
     where(id: event.invites.where(accepted: nil).pluck(:attendee_id))
   end
+
+  def self.all_others(user)
+    where.not(id: user.id)
+  end
+
+  def self.not_invited(event_id)
+    where.not(id: Invite.where(event_id: event_id).pluck(:attendee_id))
+  end
 end
