@@ -30,6 +30,11 @@ gem "jbuilder"
 # Use devise for authentication ad authorization
 gem "devise"
 
+# Use bootstrap to easily buld responsive app
+gem 'bootstrap', '~> 5.2.2'
+
+gem 'popper_js', '~> 2.11.5'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
