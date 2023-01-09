@@ -12,7 +12,7 @@
   </div>
 
   <div>
-    <strong><%= @event.date < Time.now ? "Guests" : "Confirmed guests" %>:</strong>
+    <strong><%= past_or_future_guests(@event) %>:</strong>
     <% User.where(id: @event.invites.where(accepted: true).pluck(:attendee_id)).each do |attendee| %>
       <%= link_to attendee.username, user_path(attendee) %>
     <% end %>
