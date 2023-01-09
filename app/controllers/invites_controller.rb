@@ -11,7 +11,6 @@ class InvitesController < ApplicationController
   def create
     begin
       Invite.transaction do
-        # binding.irb
         @invites = @event.invites.create!(invites_params)
         redirect_to event_path(@event), notice: "Succesfully sent"
       end
@@ -24,26 +23,12 @@ class InvitesController < ApplicationController
         }
       }
     end
-    # binding.irb
-    # @invites = @event.invites.build(invites_params)
-
-    # if @invites.save
-    #   redirect_to @event, notice: "Invite(s) sent successfully"
-    # else
-    #   render :new, status: :unprocessable_entity
-    # end
   end
 
   def show
     @invite = Invite.find_by_id(params[:id])
 
     content_not_found unless @invite.present?
-  end
-
-  def edit
-  end
-
-  def update
   end
 
   def accept
@@ -77,7 +62,6 @@ class InvitesController < ApplicationController
   private
 
     def invites_params
-      # params.permit(invites: [:attendee_id]).require(:invites)
       invites = { invites: [] }
       params[:invite][:attendee_id].each do |id|
         unless id == ''
