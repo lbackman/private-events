@@ -22,7 +22,7 @@
       <%= link_to "View invites sent", event_invites_path(event_id: @event.id) %>
     </div>
   <% end %>
-  <% if @event.date > Time.now %>
+  <% if future?(@event) %>
    <div>
     <%= link_to "Cancel event",
             event_path(event_id: @event.id),

@@ -5,7 +5,7 @@
   <% end %>
 </div>
 
-<% if event.date > Time.now%>
+<% if future?(event) %>
   <div>
     <strong>Tentative guests:</strong>
     <% User.pending(event).each do |attendee| %>

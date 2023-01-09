@@ -1,5 +1,13 @@
 module EventsHelper
   def past_or_future_guests(event)
-    event.date < Time.now ? "Guests" : "Confirmed guests"
+    past?(event) ? "Guests" : "Confirmed guests"
+  end
+
+  def future?(event)
+    event.date > Time.now
+  end
+
+  def past?(event)
+    event.date < Time.now
   end
 end
