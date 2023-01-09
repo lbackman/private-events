@@ -10,4 +10,8 @@ module EventsHelper
   def past?(event)
     event.date < Time.now
   end
+
+  def user_hosted_events(current, user, time)
+    current == user ? "My #{time} events" : "#{time.capitalize} events hosted by #{user.username}"
+  end
 end
