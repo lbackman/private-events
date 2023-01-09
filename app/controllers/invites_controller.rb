@@ -4,6 +4,10 @@ class InvitesController < ApplicationController
   before_action :ensure_correct_creator!, only: [:index, :new, :create, :destroy]
   before_action :ensure_correct_attendee!, only: [:show, :accept, :decline, :tentative]
 
+  def index
+    @invites = @event.invites.includes(:attendee)
+  end
+
   def new
     @invites = @event.invites.build
   end

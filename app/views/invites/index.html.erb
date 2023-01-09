@@ -1,9 +1,9 @@
 <h1>Guests invited to event on <%= date_informal(@event.date) %></h1>
 
-<% pending_invites  = Invite.pending(@event) %>
-<% accepted_invites = Invite.accepted(@event) %>
-<% pending_count    = pending_invites.count %>
-<% accepted_count   = accepted_invites.count %>
+<% pending_invites  = @invites.pending(@event) %>
+<% accepted_invites = @invites.accepted(@event) %>
+<% pending_count    = pending_invites.size %>
+<% accepted_count   = accepted_invites.size %>
 
 <%= render 'invites', invites: accepted_invites, event: @event, count: accepted_count, verb: 'attending' %>
 
