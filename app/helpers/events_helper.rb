@@ -14,4 +14,8 @@ module EventsHelper
   def user_hosted_events(current, user, time)
     current == user ? "My #{time} events" : "#{time.capitalize} events hosted by #{user.username}"
   end
+
+  def user_attended_events(verb)
+    "Events I #{verb}:"
+  end
 end

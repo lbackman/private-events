@@ -2,12 +2,18 @@
 
 <div id="<%= dom_id @user %>">
   <% all_events = Event.where(creator_id: @user.id) %>
-  <% past_events = all_events.where("date < ?", Time.now) %>
-  <% future_events = all_events.where("date > ?", Time.now) %>
+  <% past_events = all_events.past %>
+  <% future_events = all_events.future %>
+  <% attended = Event.attended(@user) %>
+  <% attending = Event.attending(@user) %>
 
-  <%= render 'event', events: past_events, user: @user, event_when: 'past' %>
+  <%= render 'own_event', events: past_events, user: @user, event_when: 'past' %>
 
-  <%= render 'event', events: future_events, user: @user, event_when: 'upcoming' %>
+  <%= render 'own_event', events: future_events, user: @user, event_when: 'upcoming' %>
+
+  <%= render 'attending_event', events: attended, user: @user, verb: 'have attended' %>
+
+  <%= render 'attending_event', events: attending, user: @user, verb: 'will attend' %>
 
   <%= render 'invites', user: @user %>
 </div>

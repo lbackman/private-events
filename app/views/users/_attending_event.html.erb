@@ -1,0 +1,7 @@
+<% if user == current_user && events.any? %>
+  <strong><%= user_attended_events(verb) %></strong>
+  <% events.each do |event| %>
+    <div>Date: <%= link_to date_informal(event.date), event_path(event) %></div>
+    <div>Host: <%= link_to event.creator.username, user_path(event.creator) %></div>
+  <% end %>
+<% end %>

@@ -1,18 +1,7 @@
 <% if user == current_user %>
-  <% my_invite_ids = Event.joins(:invites).where('date > ?', Time.now).where('invites.attendee_id = ?', user.id).pluck('invites.id') %>
+  <% my_invite_ids = Event.future.invitee(user).pluck('invites.id') %>
   <% my_invites = Invite.where(id: my_invite_ids) %>
-  <% my_pending = my_invites.where(accepted: nil) %>
-  <% my_accepted = my_invites.where(accepted: true) %>
-  
-  <% if my_invites.any? { |invite| invite.accepted }%>
-    <% my_events_attending = Event.where(id: my_accepted.pluck(:event_id)) %>
-    <strong>Events I will attend:</strong>
-    <% my_events_attending.each do |event| %>
-      <div>Date: <%= link_to date_informal(event.date), event_path(event) %></div>
-      <div>Host: <%= link_to event.creator.username, user_path(event.creator) %></div>
-    <% end %>
-  <% end %>
-
+ 
   <strong>My received invites:</strong>
   <% my_invites.each do |invite| %>
     <div>Event: <%= link_to date_informal(invite.event.date), event_path(invite.event) %></div>
