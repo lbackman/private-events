@@ -1,6 +1,6 @@
 <% if user == current_user %>
   <% my_invite_ids = Event.future.invitee(user).pluck('invites.id') %>
-  <% my_invites = Invite.where(id: my_invite_ids) %>
+  <% my_invites = Invite.where(id: my_invite_ids).includes(:attendee, event: :creator) %>
  
   <div class="mb-3">
     <strong>My received invites:</strong>
