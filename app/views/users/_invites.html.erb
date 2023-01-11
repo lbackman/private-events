@@ -1,8 +1,7 @@
 <% if user == current_user %>
   <% my_invite_ids = Event.future.invitee(user).pluck('invites.id') %>
   <% my_invites = Invite.where(id: my_invite_ids).includes(:attendee, event: :creator) %>
- 
-  <div class="mb-3">
+
     <strong>My received invites:</strong>
     <% my_invites.each do |invite| %>
       <div class="mb-3">
@@ -11,7 +10,6 @@
         <div><%= link_to "Respond to invite", user_invite_path(invite.attendee, invite) %></div>
       </div>
     <% end %>
-  </div>
 
   <div class="mb-3">
     <%= link_to 'New Event', new_event_path, class: "btn btn-secondary btn-sm" %>
